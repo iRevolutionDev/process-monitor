@@ -24,7 +24,7 @@
         </Grid.RowDefinitions>
 
         <ui:NavigationView x:Name="RootNavigation" Grid.Row="1"
-                           MenuItemsSource="{Binding ViewModel.MenuItems, Mode=OneWay}">
+                           MenuItemsSource="{Binding ViewModel.Pages, Mode=OneWay}">
             <ui:NavigationView.Header>
                 <ui:BreadcrumbBar
                     Margin="42,32,0,0"
