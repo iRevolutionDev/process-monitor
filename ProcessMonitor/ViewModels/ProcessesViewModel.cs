@@ -1,6 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Windows.Data;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using ProcessMonitor.Models;
 using Wpf.Ui.Controls;
@@ -9,16 +12,15 @@ namespace ProcessMonitor.ViewModels;
 
 public partial class ProcessesViewModel : ObservableObject, INavigationAware
 {
+    private static readonly object _updateLock = new();
     [ObservableProperty] private bool _handles;
     [ObservableProperty] private bool _id;
     private bool _isInitialized;
 
-    // Columns
-    [ObservableProperty] private bool _name;
+    [ObservableProperty] private ObservableCollection<SystemProcess> _processes = new();
+    [ObservableProperty] private SystemProcess? _selectedProcess;
 
-    [ObservableProperty] private ObservableCollection<ProcessItem> _processes = new();
-    [ObservableProperty] private ProcessItem? _selectedProcess;
-    [ObservableProperty] private bool _threads;
+    private Thread? _updateThread;
 
     public void OnNavigatedTo()
     {
@@ -37,16 +39,25 @@ public partial class ProcessesViewModel : ObservableObject, INavigationAware
         Processes.Clear();
 
         foreach (var process in processes)
-            Processes.Add(new ProcessItem(process));
+            Processes.Add(new SystemProcess(process));
     }
 
     private void InitializeViewModel()
     {
+        BindingOperations.EnableCollectionSynchronization(Processes, _updateLock);
+        
         UpdateProcesses();
 
-        Name = true;
-        Id = true;
-        Threads = true;
+        _updateThread = new Thread(() =>
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+                Dispatcher.CurrentDispatcher.Invoke(UpdateProcesses);
+            }
+        });
+
+        _updateThread.Start(); // TODO: Dispose thread
 
         _isInitialized = true;
     }

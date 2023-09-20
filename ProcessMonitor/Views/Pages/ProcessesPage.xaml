@@ -24,7 +24,7 @@
             </ListView.View>
 
             <ListView.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:ProcessItem}">
+                <DataTemplate DataType="{x:Type models:SystemProcess}">
                     <StackPanel Orientation="Horizontal" Margin="8, 4">
                         <TextBlock Text="{Binding Name}" Margin="0, 0, 8, 0" />
                         <TextBlock Text="{Binding Id}" />

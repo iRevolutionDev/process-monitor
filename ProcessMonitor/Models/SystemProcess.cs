@@ -2,9 +2,9 @@
 
 namespace ProcessMonitor.Models;
 
-public class ProcessItem
+public class SystemProcess
 {
-    public ProcessItem(Process process)
+    public SystemProcess(Process process)
     {
         Process = process;
     }
