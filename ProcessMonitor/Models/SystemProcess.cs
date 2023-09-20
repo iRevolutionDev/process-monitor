@@ -2,7 +2,7 @@
 
 namespace ProcessMonitor.Models;
 
-public class SystemProcess
+public class SystemProcess : Process
 {
     public SystemProcess(Process process)
     {
@@ -12,5 +12,10 @@ public class SystemProcess
     private Process Process { get; }
 
     public string Name => Process.ProcessName;
-    public int Id => Process.Id;
+    public new int Id => Process.Id;
+
+    public new void Kill()
+    {
+        Process.Kill();
+    }
 }

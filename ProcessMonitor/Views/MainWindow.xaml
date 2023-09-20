@@ -23,7 +23,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ui:NavigationView x:Name="RootNavigation" Grid.Row="1"
+        <ui:TitleBar
+            Title="{Binding ViewModel.WindowTitle, Mode=OneWay}"
+            Grid.Row="0" />
+
+        <ui:NavigationView x:Name="RootNavigation" Grid.Row="1" IsBackButtonVisible="Collapsed"
+                           MinWidth="200" Margin="0" IsPaneToggleVisible="True" PaneDisplayMode="Left"
                            MenuItemsSource="{Binding ViewModel.Pages, Mode=OneWay}">
             <ui:NavigationView.Header>
                 <ui:BreadcrumbBar
@@ -32,9 +37,5 @@
                     FontWeight="DemiBold" />
             </ui:NavigationView.Header>
         </ui:NavigationView>
-
-        <ui:TitleBar
-            Title="{Binding ViewModel.WindowTitle, Mode=OneWay}"
-            Grid.Row="0" />
     </Grid>
 </ui:FluentWindow>

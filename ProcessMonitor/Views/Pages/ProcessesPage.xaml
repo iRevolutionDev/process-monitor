@@ -32,6 +32,15 @@
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
+
+            <ListView.ContextMenu>
+                <ContextMenu
+                    ItemsSource="{Binding ViewModel.ContextMenuItems, Mode=OneWay}"
+                    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+                    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                    StaysOpen="True" />
+            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </Page>
