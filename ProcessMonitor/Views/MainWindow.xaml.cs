@@ -1,6 +1,7 @@
 ﻿using System;
 using ProcessMonitor.ViewModels;
 using Wpf.Ui;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
 namespace ProcessMonitor.Views;
@@ -11,6 +12,8 @@ public partial class MainWindow : INavigationWindow
     {
         ViewModel = viewModel;
         DataContext = this;
+
+        SystemThemeWatcher.Watch(this);
 
         InitializeComponent();
 
